@@ -9,17 +9,15 @@
  */
 public interface FileSystem {
 
-  public void mkdir(String path);
+    public void mkdir(String path);
   
-  public void touch(String path);
-  
-  public void append(String path, String data);
-  
-  public String lsByTime(String path);
-  
-  public String lsByName(String path);
-  
-  public String du(String path);
-  
-  public String cat(String path);
+    public void touch(String path);
+
+    public void ln(String source, String target);
+
+    public void find(String name);
+
+    public void findc(String criteria);
+
+    public void cycles();
 }

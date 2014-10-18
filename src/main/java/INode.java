@@ -9,29 +9,35 @@
  */
 public abstract class INode {
 
-  private String name;
+    private String name;
 
-  private long accessTime;
+    private long accessTime;
 
-  public INode(String name) {
-    this.name = name;
-    this.accessTime = System.currentTimeMillis();
-  }
+    private String path;
 
-  public long getAccessTime() {
-    return accessTime;
-  }
+    public INode(String name, String path) {
+      this.name = name;
+      this.accessTime = System.currentTimeMillis();
+        this.path = path;
+    }
 
-  public void setAccessTime(long accessTime) {
-    this.accessTime = accessTime;
-  }
+    public long getAccessTime() {
+      return accessTime;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public void setAccessTime(long accessTime) {
+      this.accessTime = accessTime;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public String getName() {
+      return name;
+    }
 
+    public void setName(String name) {
+      this.name = name;
+    }
+
+    public String getPath() {
+        return path;
+    }
 }

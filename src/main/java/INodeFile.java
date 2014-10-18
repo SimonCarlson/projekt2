@@ -10,8 +10,8 @@
  */
 public class INodeFile extends INode {
 
-  public INodeFile(String name) {
-    super(name);
-  }
+    public INodeFile(String name, String path) {
+      super(name, path);
+    }
   
 }
