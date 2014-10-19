@@ -1,7 +1,4 @@
 mkdir /home
 mkdir /test
-touch /home/hej.txt
-touch /test/hej.txt
-touch /test/txt.txt
-find hej.txt
-findc t*t
+ln /home /test
+mkdir /home/hej

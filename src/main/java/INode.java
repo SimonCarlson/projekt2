@@ -16,8 +16,8 @@ public abstract class INode {
     private String path;
 
     public INode(String name, String path) {
-      this.name = name;
-      this.accessTime = System.currentTimeMillis();
+        this.name = name;
+        this.accessTime = System.currentTimeMillis();
         this.path = path;
     }
 
