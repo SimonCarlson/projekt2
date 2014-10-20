@@ -1,4 +1,5 @@
 mkdir /home
-mkdir /test
-ln /home /test
-mkdir /home/hej
+mkdir /home/johan
+mkdir /home/johan/files
+ln /home/johan/files /home/johan
+cycles

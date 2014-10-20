@@ -4,10 +4,11 @@
  * and open the template in the editor.
  */
 
-
 import edu.princeton.cs.introcs.StdOut;
-
+import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.Set;
 
 /**
  *
@@ -39,7 +40,7 @@ public class MiniFs implements FileSystem {
 
         if (directory != null) {                            // Only create new dir if returned dir isn't null
             directory.getChildren().put(targetName, new INodeDirectory(targetName, path));  // Put new dir in hashtable
-            StdOut.println("Directory \"" + targetName + "\" successfully created at \"" + path + "\".");
+            StdOut.println("Directory " + targetName + " successfully created at " + path + ".");
         }
     }
 
@@ -56,7 +57,7 @@ public class MiniFs implements FileSystem {
 
         if (directory != null) {                            // Only create new file if returned dir isn't null
             directory.getChildren().put(targetName, new INodeFile(targetName, path));       // Put new file in hashtable
-            StdOut.println("File \"" + targetName + "\" successfully created at \"" + path + "\".");
+            StdOut.println("File " + targetName + " successfully created at " + path + ".");
         }
 
     }
@@ -74,10 +75,10 @@ public class MiniFs implements FileSystem {
     @Override
     public void ln(String source, String target) {
         if (symTable.containsKey(source)) {                 // If the hashtable contains source, source is already linked
-            StdOut.println("Error: \"" + source + "\" is already linked to \"" + symTable.get(source) + "\"");
+            StdOut.println("Error: " + source + " is already linked to " + symTable.get(source) + "");
         } else {
             if (digger(source, true) != null && digger(target, true) != null) { // If the paths are valid...
-                symTable.put(source, target);                                   // Link them and add to hashtable
+                symTable.put(source, target);                                   // Link them by adding to hashtable
                 StdOut.println(source + " linked with " + target + ".");
             }
         }
@@ -93,7 +94,7 @@ public class MiniFs implements FileSystem {
     private void find(INodeDirectory curDir, String name) {
         for (String key : curDir.getChildren().keySet()) {  // Iterate over current dirs hashtable
             if (key.equals(name)) {                         // If we find an entry with the target name...
-                StdOut.println("Find: Found entry at \"" + curDir.getChildren().get(key).getPath() + "\"."); // ...print out where it was found
+                StdOut.println("Find: Found entry at " + curDir.getChildren().get(key).getPath() + "."); // ...print out where it was found
             }
             if (curDir.getChildren().get(key) instanceof INodeDirectory) {      // If the current key corresponds to a dir...
                 find((INodeDirectory) curDir.getChildren().get(key), name);  // ...start searching for that dir as well
@@ -112,17 +113,17 @@ public class MiniFs implements FileSystem {
 
             if (criteria.charAt(0) == '*') {                // First char is *
                 if (key.endsWith(criteria.substring(1))) {  // If an INode name ends with the criteria string (* omitted) -> hit
-                    StdOut.println("Findc: Found entry at \"" + curDir.getChildren().get(key).getPath() + "\".");
+                    StdOut.println("Findc: Found entry at " + curDir.getChildren().get(key).getPath() + ".");
                 }
             } else if (criteria.endsWith("*")) {            // Last char is *
                 // If an INode name starts with the critera string (* omitted) -> hit
                 if (key.substring(0, criteria.indexOf('*')).equals(criteria.substring(0, criteria.indexOf('*')))) {
-                    StdOut.println("Findc: Found entry at \"" + curDir.getChildren().get(key).getPath() + "\".");
+                    StdOut.println("Findc: Found entry at " + curDir.getChildren().get(key).getPath() + ".");
                 }
             } else {                                        // * is in the middle
                 // If an INode name starts with the string before * and ends with string after * -> hit
                 if (key.substring(0, criteria.indexOf('*')).equals(criteria.substring(0, criteria.indexOf('*'))) && key.endsWith(criteria.substring(criteria.indexOf('*') + 1))) {
-                    StdOut.println("Findc: Found entry at \"" + curDir.getChildren().get(key).getPath() + "\".");
+                    StdOut.println("Findc: Found entry at " + curDir.getChildren().get(key).getPath() + ".");
                 }
             }
 
@@ -134,7 +135,26 @@ public class MiniFs implements FileSystem {
 
     @Override
     public void cycles() {
+        LinkedList<String> visited = new LinkedList<String>();  // Saves which keys that are visited
+        String value;                                       // For readability
+        Set<String> strings = symTable.keySet();            // Set of all keys in symTable
+        String[] keys = strings.toArray(new String[strings.size()]);    // Cast to array for sorting
+        Arrays.sort(keys);
 
+        for (String key : keys) {                           // Iterate over keys in array
+            value = symTable.get(key);
+            if (key.contains(value)) {                      // If value is a substring of key, cycle is found
+                StdOut.println(key + " -> " + value + " causes a cycle.");
+                break;
+            }
+            visited.add(key);                               // Mark key as visited
+            if (symTable.containsKey(value)) {              // If value exists as key in symTable...
+                if (visited.contains(value)) {              // ...and value as key is visited, cycle is found
+                    StdOut.println(key + " -> " + value + " causes a cycle.");
+                    break;
+                }
+            }
+        }
     }
 
     private INodeDirectory digger(String path, boolean lastCheck) {
@@ -154,7 +174,7 @@ public class MiniFs implements FileSystem {
         }
 
 
-        for (int i= 1; i < loopLength; i++) {         // Loop through for each but the first and last names
+        for (int i = 1; i < loopLength; i++) {         // Loop through for each but the first and last names
             if (lastDir.getChildren().get(names[i]) == null) {  // If the name doesn't exist in the dirs hashtable...
                 StdOut.println("Error: Invalid path.");     // ...the path is invalid
                 return null;
