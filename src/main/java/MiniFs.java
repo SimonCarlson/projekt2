@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 import edu.princeton.cs.introcs.StdOut;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.Set;
 
 /**
  *
@@ -19,7 +19,7 @@ public class MiniFs implements FileSystem {
 
     private static INodeDirectory lastDir;
 
-    private static String targetName, head, tail;           // Used in digger, mkdir and touch
+    private static String targetName;          // Used in digger
 
     Hashtable<String, String> symTable = new Hashtable<String, String>();   // Hashtable to store symbolic links
 
@@ -113,38 +113,19 @@ public class MiniFs implements FileSystem {
     @Override
     public void cycles() {
         LinkedList<String> visited = new LinkedList<String>();  // Saves which keys that are visited
-        String value;                                      // For readability
-        String[] keys = symTable.keySet().toArray(new String[symTable.size()]);    // Cast to array for sorting
-        Arrays.sort(keys);
+        String value;                                       // For readability
+        Set<String> keys = symTable.keySet();
 
-        for (String key : keys) {                           // Iterate over keys in array
+        mainloop: for (String key : keys) {                 // Iterate over keys in array
             value = symTable.get(key);
             visited.add(key);                               // Mark key as visited
-            if (key.contains(value)) {                      // If value is a substring of key, cycle is found
-                StdOut.println(key + " -> " + value + " causes a cycle.");
-                break;
-            }
-            if (symTable.containsKey(value)) {              // If value exists as key in symTable...
-                if (visited.contains(value)) {              // ...and value as key is visited, cycle is found
-                    StdOut.println(key + " -> " + value + " causes a cycle.");
-                    StringBuilder sb = new StringBuilder();
-                    cycles(value, value, sb);
-                    break;
+            for (String entry : visited) {
+                if (entry.contains(value)) {
+                    StdOut.println(key + " -> " + value + " causes a loop");
+                    break mainloop;
                 }
             }
         }
-    }
-
-    private void cycles(String cycle, String key, StringBuilder sb) {
-        if (symTable.get(key).equals(cycle)) {
-            sb.append(key).append(" -> ").append(symTable.get(key));
-            StdOut.println(sb.toString());
-            return;
-        }
-
-        sb.append(key).append(" -> ");
-        cycles(cycle, symTable.get(key), sb);
-
     }
 
     private INodeDirectory digger(String path, boolean lastCheck) {

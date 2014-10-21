@@ -1,9 +1,8 @@
-mkdir /a
-mkdir /a/c
-mkdir /a/d
-mkdir /b
-mkdir /b/e
-mkdir /b/f
-ln /a/c /b/e
-ln /b/e /a
+mkdir /c
+mkdir /l
+mkdir /c/hejsan
+mkdir /c/kafs
+mkdir /l/ysua
+ln /c/hejsan /l
+ln /l /c
 cycles
