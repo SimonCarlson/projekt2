@@ -1,7 +1,9 @@
-mkdir /c
-mkdir /d
-mkdir /e
-ln /c /d
-ln /d /e
-ln /e /c
+mkdir /a
+mkdir /a/c
+mkdir /a/d
+mkdir /b
+mkdir /b/e
+mkdir /b/f
+ln /a/c /b/e
+ln /b/e /a
 cycles

@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 import edu.princeton.cs.introcs.StdOut;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.LinkedList;
-import java.util.Set;
 
 /**
  *
@@ -29,14 +29,7 @@ public class MiniFs implements FileSystem {
 
     @Override
     public void mkdir(String path) {
-        INodeDirectory directory;
-        separator(path);                                    // Separates the last name in path from the rest
-        if (symTable.get(head) != null) {                   // If head is a key in the symbolic link hashtable...
-            directory = digger(symTable.get(head) + tail, false);   //...the dir is created in the dir head is pointing to
-            path = symTable.get((head));                    // Update path for correct printing
-        } else {
-            directory = digger(path, false);                // If no such link, path is the supplied path
-        }
+        INodeDirectory directory = digger(path, false);
 
         if (directory != null) {                            // Only create new dir if returned dir isn't null
             directory.getChildren().put(targetName, new INodeDirectory(targetName, path));  // Put new dir in hashtable
@@ -46,14 +39,7 @@ public class MiniFs implements FileSystem {
 
     @Override
     public void touch(String path) {
-        INodeDirectory directory;
-        separator(path);                                    // Separates the last name in a path from the rest
-        if (symTable.get(head) != null) {                   // If head is a key in the symbolic link hashtable...
-            directory = digger(symTable.get(head) + tail, false);   //...the file is created in the dir head is pointing to
-            path = symTable.get(head);                      // Update path for correct printing
-        } else {
-            directory = digger(path, false);                // If no such link, path is the supplied path
-        }
+        INodeDirectory directory = digger(path, false);
 
         if (directory != null) {                            // Only create new file if returned dir isn't null
             directory.getChildren().put(targetName, new INodeFile(targetName, path));       // Put new file in hashtable
@@ -62,27 +48,18 @@ public class MiniFs implements FileSystem {
 
     }
 
-    public void separator(String path) {
-        if (path.substring(1).contains("/")) {              // If the path contains more than one "/"...
-            head = path.substring(0, path.lastIndexOf('/'));    // ...substring accordingly
-            tail = path.substring(path.lastIndexOf('/'));
-        } else {
-            head = path;                                    // If path only contains one "/" there is no tail
-            tail = null;
-        }
-    }
-
     @Override
     public void ln(String source, String target) {
         if (symTable.containsKey(source)) {                 // If the hashtable contains source, source is already linked
             StdOut.println("Error: " + source + " is already linked to " + symTable.get(source) + "");
         } else {
             if (digger(source, true) != null && digger(target, true) != null) { // If the paths are valid...
-                symTable.put(source, target);                                   // Link them by adding to hashtable
+                String newChild = target.substring(target.lastIndexOf('/') + 1);
+                digger(source, true).getChildren().put(newChild, digger(target, true));
+                symTable.put(source, target);
                 StdOut.println(source + " linked with " + target + ".");
             }
         }
-
     }
 
     @Override
