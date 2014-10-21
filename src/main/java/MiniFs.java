@@ -136,7 +136,7 @@ public class MiniFs implements FileSystem {
     @Override
     public void cycles() {
         LinkedList<String> visited = new LinkedList<String>();  // Saves which keys that are visited
-        String value;                                       // For readability
+        String value;                                      // For readability
         String[] keys = symTable.keySet().toArray(new String[symTable.size()]);    // Cast to array for sorting
         Arrays.sort(keys);
 
@@ -150,15 +150,24 @@ public class MiniFs implements FileSystem {
             if (symTable.containsKey(value)) {              // If value exists as key in symTable...
                 if (visited.contains(value)) {              // ...and value as key is visited, cycle is found
                     StdOut.println(key + " -> " + value + " causes a cycle.");
+                    StringBuilder sb = new StringBuilder();
+                    cycles(value, value, sb);
                     break;
                 }
             }
         }
-        /*
-        for (String key : visited) {
-            StdOut.println(key);
+    }
+
+    private void cycles(String cycle, String key, StringBuilder sb) {
+        if (symTable.get(key).equals(cycle)) {
+            sb.append(key).append(" -> ").append(symTable.get(key));
+            StdOut.println(sb.toString());
+            return;
         }
-        */
+
+        sb.append(key).append(" -> ");
+        cycles(cycle, symTable.get(key), sb);
+
     }
 
     private INodeDirectory digger(String path, boolean lastCheck) {
