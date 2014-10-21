@@ -1,5 +1,14 @@
-mkdir /home
-mkdir /home/johan
-mkdir /home/johan/files
-ln /home/johan/files /home/johan
+mkdir /a
+mkdir /b
+mkdir /a/c
+mkdir /a/d
+mkdir /b/e
+mkdir /b/f
+mkdir /1
+mkdir /2
+ln /1 /2
+ln /a /b/f
+ln /b/f /a/c
+ln /a/c /b
+ln /b /a
 cycles
