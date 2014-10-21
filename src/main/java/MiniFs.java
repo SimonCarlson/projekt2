@@ -136,25 +136,38 @@ public class MiniFs implements FileSystem {
     @Override
     public void cycles() {
         LinkedList<String> visited = new LinkedList<String>();  // Saves which keys that are visited
-        String value;                                       // For readability
-        Set<String> strings = symTable.keySet();            // Set of all keys in symTable
-        String[] keys = strings.toArray(new String[strings.size()]);    // Cast to array for sorting
+        String value;                                      // For readability
+        String[] keys = symTable.keySet().toArray(new String[symTable.size()]);    // Cast to array for sorting
         Arrays.sort(keys);
 
         for (String key : keys) {                           // Iterate over keys in array
             value = symTable.get(key);
+            visited.add(key);                               // Mark key as visited
             if (key.contains(value)) {                      // If value is a substring of key, cycle is found
                 StdOut.println(key + " -> " + value + " causes a cycle.");
                 break;
             }
-            visited.add(key);                               // Mark key as visited
             if (symTable.containsKey(value)) {              // If value exists as key in symTable...
                 if (visited.contains(value)) {              // ...and value as key is visited, cycle is found
                     StdOut.println(key + " -> " + value + " causes a cycle.");
+                    StringBuilder sb = new StringBuilder();
+                    cycles(value, value, sb);
                     break;
                 }
             }
         }
+    }
+
+    private void cycles(String cycle, String key, StringBuilder sb) {
+        if (symTable.get(key).equals(cycle)) {
+            sb.append(key).append(" -> ").append(symTable.get(key));
+            StdOut.println(sb.toString());
+            return;
+        }
+
+        sb.append(key).append(" -> ");
+        cycles(cycle, symTable.get(key), sb);
+
     }
 
     private INodeDirectory digger(String path, boolean lastCheck) {
@@ -167,6 +180,7 @@ public class MiniFs implements FileSystem {
         lastDir = root;                                     // Always start at root
         targetName = names[names.length - 1];               // Last entry of names will be the file/dir to be created
         int loopLength;
+
         if (lastCheck) {
             loopLength = names.length;
         } else {
@@ -174,7 +188,7 @@ public class MiniFs implements FileSystem {
         }
 
 
-        for (int i = 1; i < loopLength; i++) {         // Loop through for each but the first and last names
+        for (int i = 1; i < loopLength; i++) {
             if (lastDir.getChildren().get(names[i]) == null) {  // If the name doesn't exist in the dirs hashtable...
                 StdOut.println("Error: Invalid path.");     // ...the path is invalid
                 return null;
