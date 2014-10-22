@@ -1,8 +1,5 @@
-mkdir /c
-mkdir /l
-mkdir /c/hejsan
-mkdir /c/kafs
-mkdir /l/ysua
-ln /c/hejsan /l
-ln /l /c
-cycles
+mkdir /home
+mkdir /test
+mkdir /test/away
+ln /test/away /home
+find home

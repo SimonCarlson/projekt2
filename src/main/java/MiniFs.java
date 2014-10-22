@@ -5,7 +5,6 @@
  */
 
 import edu.princeton.cs.introcs.StdOut;
-import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Set;
@@ -65,18 +64,30 @@ public class MiniFs implements FileSystem {
     @Override
     public void find(String name) {
         lastDir = root;
-        find(lastDir, name);
+        StringBuilder path = new StringBuilder();
+        find(lastDir, name, path);
     }
 
-    private void find(INodeDirectory curDir, String name) {
+    private void find(INodeDirectory curDir, String name, StringBuilder path) {
+
+        if (curDir.getName().equals(name)) {                // If we are in the dir we are looking for, print out
+            StdOut.println("Find: Found entry at " + path + curDir.getName() + ".");
+        }
+
+        path.append(curDir.getName());                      // Build up path
+        path.append("/");
+
+
         for (String key : curDir.getChildren().keySet()) {  // Iterate over current dirs hashtable
-            if (key.equals(name)) {                         // If we find an entry with the target name...
-                StdOut.println("Find: Found entry at " + curDir.getChildren().get(key).getPath() + "."); // ...print out where it was found
+            if (key.equals(name) && curDir.getChildren().get(key) instanceof INodeFile) {   // If we find an entry with the target name...
+                StdOut.println("Find: Found entry at " + path + key + "."); // ...print out where it was found
             }
             if (curDir.getChildren().get(key) instanceof INodeDirectory) {      // If the current key corresponds to a dir...
-                find((INodeDirectory) curDir.getChildren().get(key), name);  // ...start searching for that dir as well
+                find((INodeDirectory) curDir.getChildren().get(key), name, path);  // ...start searching for that dir as well
             }
         }
+
+        path.delete(path.length() - (curDir.getName().length() + 1), path.length());    // Remove the dir we visited
     }
 
     @Override
