@@ -79,11 +79,11 @@ public class MiniFs implements FileSystem {
 
 
         for (String key : curDir.getChildren().keySet()) {  // Iterate over current dirs hashtable
-            if (key.equals(name) && curDir.getChildren().get(key) instanceof INodeFile) {   // If we find an entry with the target name...
-                StdOut.println("Find: Found entry at " + path + key + "."); // ...print out where it was found
-            }
             if (curDir.getChildren().get(key) instanceof INodeDirectory) {      // If the current key corresponds to a dir...
                 find((INodeDirectory) curDir.getChildren().get(key), name, path);  // ...start searching for that dir as well
+            }
+            if (key.equals(name) && curDir.getChildren().get(key) instanceof INodeFile) {   // If we find an entry with the target name...
+                StdOut.println("Find: Found entry at " + path + key + "."); // ...print out where it was found
             }
         }
 
@@ -93,32 +93,67 @@ public class MiniFs implements FileSystem {
     @Override
     public void findc(String criteria) {
         lastDir = root;
-        findc(lastDir, criteria);
+        StringBuilder path = new StringBuilder();
+
+        if (!criteria.contains("*")) {                      // Command must contain a *
+            StdOut.println("Error: invalid command");
+            return;
+        }
+
+        if (criteria.charAt(0) == '*') {                    // If criteria starts with *...
+            criteria = criteria.substring(1);               // ...remove it from criteria
+            findc(lastDir, criteria, path, 0);              // Call helper method with case 0
+        } else if (criteria.endsWith("*")) {                // If criteria ends with *...
+            criteria = criteria.substring(0, criteria.length() - 1);    // ...remove it from criteria
+            findc(lastDir, criteria, path, 1);              // Call helper method with case 1
+        } else {
+            findc(lastDir, criteria, path, 2);              // Call helper method with case 2
+        }
     }
 
-    private void findc(INodeDirectory curDir, String criteria) {
-        for (String key : curDir.getChildren().keySet()) {  // Iterate over the hashtable for the current dir
-
-            if (criteria.charAt(0) == '*') {                // First char is *
-                if (key.endsWith(criteria.substring(1))) {  // If an INode name ends with the criteria string (* omitted) -> hit
-                    StdOut.println("Findc: Found entry at " + curDir.getChildren().get(key).getPath() + ".");
-                }
-            } else if (criteria.endsWith("*")) {            // Last char is *
-                // If an INode name starts with the critera string (* omitted) -> hit
-                if (key.substring(0, criteria.indexOf('*')).equals(criteria.substring(0, criteria.indexOf('*')))) {
-                    StdOut.println("Findc: Found entry at " + curDir.getChildren().get(key).getPath() + ".");
-                }
-            } else {                                        // * is in the middle
-                // If an INode name starts with the string before * and ends with string after * -> hit
-                if (key.substring(0, criteria.indexOf('*')).equals(criteria.substring(0, criteria.indexOf('*'))) && key.endsWith(criteria.substring(criteria.indexOf('*') + 1))) {
-                    StdOut.println("Findc: Found entry at " + curDir.getChildren().get(key).getPath() + ".");
-                }
+    private void findc(INodeDirectory curDir, String criteria, StringBuilder path, int pos) {
+        if (pos == 0) {
+            if (curDir.getName().endsWith(criteria)) {      // If current directory ends with criteria, hit
+                StdOut.println("Findc: Found entry at " + path + curDir.getName()); // Print out current path
             }
-
-            if (curDir.getChildren().get(key) instanceof INodeDirectory) {  // If the key corresponds to a dir...
-                findc((INodeDirectory) curDir.getChildren().get(key), criteria);    // ...search for that dir as well
+        } else if (pos == 1) {
+            if (curDir.getName().startsWith(criteria)) {    // If current directory starts with criteria, hit
+                StdOut.println("Findc: Found entry at " + path + curDir.getName()); //Print out current path
+            }
+        } else {
+            String head = criteria.substring(0, criteria.indexOf('*'));     // String before *
+            String tail = criteria.substring(criteria.indexOf('*') + 1);    // String after *
+            if (curDir.getName().startsWith(head) && curDir.getName().endsWith(tail)) { // If current directory starts and ends with correct strings, hit
+                StdOut.println("Findc: Found entry at " + path + curDir.getName()); // Print out current path
             }
         }
+
+        path.append(curDir.getName());                      // Build up path
+        path.append("/");
+
+        for (String key : curDir.getChildren().keySet()) {  // Iterate over keys in hashtable for current directory
+            if (curDir.getChildren().get(key) instanceof INodeDirectory) {  // If we find a directory, start searching for that directory
+                findc((INodeDirectory) curDir.getChildren().get(key), criteria, path, pos);
+            }
+
+            if (pos == 0) {                                 // Entire codeblock follows same logic as above
+                if (key.endsWith(criteria) && curDir.getChildren().get(key) instanceof INodeFile) {
+                    StdOut.println("Findc: Found entry at " + path + key);
+                }
+            } else if (pos == 1) {
+                if (key.startsWith(criteria) && curDir.getChildren().get(key) instanceof INodeFile) {
+                    StdOut.println("Findc: Found entry at " + path + key);
+                }
+            } else {
+                String head = criteria.substring(0, criteria.indexOf('*'));
+                String tail = criteria.substring(criteria.indexOf('*') + 1);
+                if (key.startsWith(head) && key.endsWith(tail) && curDir.getChildren().get(key) instanceof INodeFile) {
+                    StdOut.println("Findc: Found entry at " + path + key);
+                }
+            }
+        }
+
+        path.delete(path.length() - (curDir.getName().length() + 1), path.length());    // Remove the path we came from
     }
 
     @Override

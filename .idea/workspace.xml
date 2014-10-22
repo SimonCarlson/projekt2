@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6f3d1bda-d45f-48a0-ad96-5f3c7d42e9fc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/MiniFs.java" afterPath="$PROJECT_DIR$/src/main/java/MiniFs.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/commands.txt" afterPath="$PROJECT_DIR$/commands.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="projekt2.iws" />
@@ -107,10 +106,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="MiniFs.java" pinned="false" current="false" current-in-tab="true">
+          <file leaf-file-name="MiniFs.java" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/MiniFs.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="93" column="40" selection-start="3719" selection-end="3719" vertical-scroll-proportion="0.67987806" vertical-offset="557" max-vertical-offset="1972">
+                <state line="47" column="5" selection-start="1602" selection-end="1602" vertical-scroll-proportion="0.3207547" vertical-offset="119" max-vertical-offset="2244">
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="docComment;class#MiniFs#0" expanded="false" />
@@ -118,7 +117,9 @@
                     <element signature="method#mkdir#0;class#MiniFs#0" expanded="false" />
                     <element signature="method#touch#0;class#MiniFs#0" expanded="false" />
                     <element signature="method#ln#0;class#MiniFs#0" expanded="false" />
-                    <element signature="e#5568#5576#0" expanded="true" />
+                    <element signature="method#find#0;class#MiniFs#0" expanded="false" />
+                    <element signature="method#cycles#0;class#MiniFs#0" expanded="false" />
+                    <element signature="e#7394#7402#0" expanded="true" />
                     <element signature="method#digger#0;class#MiniFs#0" expanded="false" />
                   </folding>
                 </state>
@@ -156,10 +157,10 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="commands.txt" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="commands.txt" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/commands.txt">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="4" column="9" selection-start="70" selection-end="70" vertical-scroll-proportion="0.103658535" vertical-offset="0" max-vertical-offset="656">
+                <state line="4" column="9" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0754717" vertical-offset="0" max-vertical-offset="901">
                   <folding />
                 </state>
               </provider>
@@ -518,7 +519,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -537,7 +538,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15548456" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26429343" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26429343" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -604,7 +605,9 @@
             <element signature="method#mkdir#0;class#MiniFs#0" expanded="false" />
             <element signature="method#touch#0;class#MiniFs#0" expanded="false" />
             <element signature="method#ln#0;class#MiniFs#0" expanded="false" />
-            <element signature="e#5568#5576#0" expanded="true" />
+            <element signature="method#find#0;class#MiniFs#0" expanded="false" />
+            <element signature="method#cycles#0;class#MiniFs#0" expanded="false" />
+            <element signature="e#7394#7402#0" expanded="true" />
             <element signature="method#digger#0;class#MiniFs#0" expanded="false" />
           </folding>
         </state>
@@ -669,7 +672,9 @@
             <element signature="method#mkdir#0;class#MiniFs#0" expanded="false" />
             <element signature="method#touch#0;class#MiniFs#0" expanded="false" />
             <element signature="method#ln#0;class#MiniFs#0" expanded="false" />
-            <element signature="e#5568#5576#0" expanded="true" />
+            <element signature="method#find#0;class#MiniFs#0" expanded="false" />
+            <element signature="method#cycles#0;class#MiniFs#0" expanded="false" />
+            <element signature="e#7394#7402#0" expanded="true" />
             <element signature="method#digger#0;class#MiniFs#0" expanded="false" />
           </folding>
         </state>
@@ -737,7 +742,9 @@
             <element signature="method#mkdir#0;class#MiniFs#0" expanded="false" />
             <element signature="method#touch#0;class#MiniFs#0" expanded="false" />
             <element signature="method#ln#0;class#MiniFs#0" expanded="false" />
-            <element signature="e#5568#5576#0" expanded="true" />
+            <element signature="method#find#0;class#MiniFs#0" expanded="false" />
+            <element signature="method#cycles#0;class#MiniFs#0" expanded="false" />
+            <element signature="e#7394#7402#0" expanded="true" />
             <element signature="method#digger#0;class#MiniFs#0" expanded="false" />
           </folding>
         </state>
@@ -795,7 +802,9 @@
             <element signature="method#mkdir#0;class#MiniFs#0" expanded="false" />
             <element signature="method#touch#0;class#MiniFs#0" expanded="false" />
             <element signature="method#ln#0;class#MiniFs#0" expanded="false" />
-            <element signature="e#5568#5576#0" expanded="true" />
+            <element signature="method#find#0;class#MiniFs#0" expanded="false" />
+            <element signature="method#cycles#0;class#MiniFs#0" expanded="false" />
+            <element signature="e#7394#7402#0" expanded="true" />
             <element signature="method#digger#0;class#MiniFs#0" expanded="false" />
           </folding>
         </state>
@@ -853,7 +862,9 @@
             <element signature="method#mkdir#0;class#MiniFs#0" expanded="false" />
             <element signature="method#touch#0;class#MiniFs#0" expanded="false" />
             <element signature="method#ln#0;class#MiniFs#0" expanded="false" />
-            <element signature="e#5568#5576#0" expanded="true" />
+            <element signature="method#find#0;class#MiniFs#0" expanded="false" />
+            <element signature="method#cycles#0;class#MiniFs#0" expanded="false" />
+            <element signature="e#7394#7402#0" expanded="true" />
             <element signature="method#digger#0;class#MiniFs#0" expanded="false" />
           </folding>
         </state>
@@ -942,9 +953,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/commands.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="170">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/MiniFs.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="93" column="40" selection-start="3719" selection-end="3719" vertical-scroll-proportion="0.67987806" vertical-offset="557" max-vertical-offset="1972">
+        <state line="47" column="5" selection-start="1602" selection-end="1602" vertical-scroll-proportion="0.3207547" vertical-offset="119" max-vertical-offset="2244">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;class#MiniFs#0" expanded="false" />
@@ -952,16 +970,11 @@
             <element signature="method#mkdir#0;class#MiniFs#0" expanded="false" />
             <element signature="method#touch#0;class#MiniFs#0" expanded="false" />
             <element signature="method#ln#0;class#MiniFs#0" expanded="false" />
-            <element signature="e#5568#5576#0" expanded="true" />
+            <element signature="method#find#0;class#MiniFs#0" expanded="false" />
+            <element signature="method#cycles#0;class#MiniFs#0" expanded="false" />
+            <element signature="e#7394#7402#0" expanded="true" />
             <element signature="method#digger#0;class#MiniFs#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/commands.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="9" selection-start="70" selection-end="70" vertical-scroll-proportion="0.103658535" vertical-offset="0" max-vertical-offset="656">
-          <folding />
         </state>
       </provider>
     </entry>
