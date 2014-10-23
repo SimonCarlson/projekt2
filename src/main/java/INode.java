@@ -13,12 +13,9 @@ public abstract class INode {
 
     private long accessTime;
 
-    private String path;
-
-    public INode(String name, String path) {
+    public INode(String name) {
         this.name = name;
         this.accessTime = System.currentTimeMillis();
-        this.path = path;
     }
 
     public long getAccessTime() {
@@ -35,9 +32,5 @@ public abstract class INode {
 
     public void setName(String name) {
       this.name = name;
-    }
-
-    public String getPath() {
-        return path;
     }
 }

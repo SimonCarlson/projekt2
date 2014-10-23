@@ -13,8 +13,8 @@ public class INodeDirectory extends INode {
 
     private Hashtable<String, INode> children;
 
-    public INodeDirectory(String name, String path) {
-        super(name, path);
+    public INodeDirectory(String name) {
+        super(name);
         children = new Hashtable<String, INode>();
     }
 

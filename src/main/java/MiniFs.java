@@ -23,7 +23,7 @@ public class MiniFs implements FileSystem {
     Hashtable<String, String> symTable = new Hashtable<String, String>();   // Hashtable to store symbolic links
 
     public MiniFs() {
-        root = new INodeDirectory("/", "/");
+        root = new INodeDirectory("/");
     }
 
     @Override
@@ -31,7 +31,7 @@ public class MiniFs implements FileSystem {
         INodeDirectory directory = digger(path, false);
 
         if (directory != null) {                            // Only create new dir if returned dir isn't null
-            directory.getChildren().put(targetName, new INodeDirectory(targetName, path));  // Put new dir in hashtable
+            directory.getChildren().put(targetName, new INodeDirectory(targetName));  // Put new dir in hashtable
             StdOut.println("Directory " + targetName + " successfully created at " + path + ".");
         }
     }
@@ -41,7 +41,7 @@ public class MiniFs implements FileSystem {
         INodeDirectory directory = digger(path, false);
 
         if (directory != null) {                            // Only create new file if returned dir isn't null
-            directory.getChildren().put(targetName, new INodeFile(targetName, path));       // Put new file in hashtable
+            directory.getChildren().put(targetName, new INodeFile(targetName));       // Put new file in hashtable
             StdOut.println("File " + targetName + " successfully created at " + path + ".");
         }
 
